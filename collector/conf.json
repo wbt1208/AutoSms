@@ -1,0 +1,30 @@
+{
+    "autosms_mode": 1,
+    "paramters": {
+        "source": "百家号",
+        "field": "全部",
+        "sort": "发布时间",
+        "type": "文章",
+        "read_numbers": "清除",
+        "time": "清除",
+        "keyword": {
+            "kw": "李",
+            "kwtype": "标题",
+            "kwmode": "包含一个词"
+        }
+    },
+    "chrome_path": "/Users/kk/Downloads/chrome-mac/Chromium.app/Contents/MacOS/Chromium",
+    "chrome_driver_path": "/Users/kk/PycharmProjects/ExPython/r_request/chromedriver",
+    "auto_conf_chrome": false,
+    "takeover": false,
+    "simulate_mobile_phone": false,
+    "chrome_options": [
+        "--diable—gpu",
+        "--start-maximized",
+        "--user-data-dir=./selenium"
+    ],
+    "auto_login": false,
+    "login_wait_times": 30,
+    "log_filename": "./autosms.log",
+    "log_mode": "a+"
+}

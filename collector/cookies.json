@@ -1,0 +1,46 @@
+[
+    {
+        "domain": ".yizhuan5.com",
+        "expiry": 1661169125,
+        "httpOnly": false,
+        "name": "Hm_lvt_119d728e13405b1761bac1057994ec52",
+        "path": "/",
+        "secure": false,
+        "value": "1629633124"
+    },
+    {
+        "domain": ".yizhuan5.com",
+        "httpOnly": false,
+        "name": "Hm_lpvt_119d728e13405b1761bac1057994ec52",
+        "path": "/",
+        "secure": false,
+        "value": "1629633125"
+    },
+    {
+        "domain": ".yizhuan5.com",
+        "expiry": 1629633725,
+        "httpOnly": false,
+        "name": "ckt",
+        "path": "/",
+        "secure": false,
+        "value": "1629633125"
+    },
+    {
+        "domain": "www.yizhuan5.com",
+        "expiry": 1645357924,
+        "httpOnly": false,
+        "name": "CNZZDATA1278145158",
+        "path": "/",
+        "secure": false,
+        "value": "1820946454-1629629657-%7C1629629657"
+    },
+    {
+        "domain": ".yizhuan5.com",
+        "expiry": 1645357924,
+        "httpOnly": false,
+        "name": "UM_distinctid",
+        "path": "/",
+        "secure": false,
+        "value": "17b6db418da9f2-0dbfe8d22f771e-6e27115d-13c680-17b6db418dbb9d"
+    }
+]
