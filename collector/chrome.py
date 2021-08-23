@@ -1,5 +1,6 @@
 import os
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 import sys
 import logging
@@ -82,4 +83,9 @@ class ChromeFectory:
                 sys.exit(2)
 
     def get_chrome(self):
-        return webdriver.Chrome(self.driver_path, chrome_options=self.options)
+        self.browser = webdriver.Chrome(self.driver_path, chrome_options=self.options)
+        return self.browser
+
+    def get_action_chains(self):
+        if hasattr(self, "browser"):
+            return ActionChains(self.browser)

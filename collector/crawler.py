@@ -9,7 +9,9 @@ from xml import etree
 
 class CrawlerFormatter:
     def __init__(self):
-        self.browser = ChromeFectory(conf).get_chrome()
+        self.cf = ChromeFectory(conf)
+        self.browser = self.cf.get_chrome()
+        self.action = self.cf.get_action_chains()
         self.auto_login = conf["auto_login"]
         self.login_wait_times = conf["login_wait_times"]
         self.browser.maximize_window()
@@ -33,54 +35,54 @@ class ArticleCrawler(CrawlerFormatter):
     def get_xpath(self):
         logging.info("解析xpath=========================")
         try:
-            self.source_xpath = f"//div[@class='filter-row'][1]/div[@class='filter-content category-seconds-list clearfix']/span[contains(., '{self.source}')]"
+            self.source_xpath = f"//div[@class='filter-row'][1]//span[contains(., '{self.source}')]"
             logging.info(self.source_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.source_xpath).click()
 
-            self.field_xpath = f"//div[@class='filter-row'][2]/div[@class='filter-content category-seconds-list clearfix']/span[contains(., '{self.field}')]"
+            self.field_xpath = f"//div[@class='filter-row'][2]//span[contains(., '{self.field}')]"
             logging.info(self.field_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.field_xpath).click()
 
             self.sort_xpath = f"//div[@class='filter-row'][3]//span[contains(., '{self.sort}')]"
             logging.info(self.sort_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.sort_xpath).click()
 
             self.type_xpath = f"//div[@class='filter-row'][4]//span[contains(., '{self.type}')]"
             logging.info(self.type_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.type_xpath).click()
 
             self.read_numbers_xpath = f"//div[@class='filter-row'][5]//span[contains(., '{self.read_numbers}')]"
             logging.info(self.read_numbers_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.read_numbers_xpath).click()
 
             self.time_xpath = f"//div[@class='filter-row'][6]//span[contains(., '{self.time}')]"
             logging.info(self.time_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.time_xpath).click()
 
             self.keyword_input_xpath = "//div[@class='filter-row'][7]//input[@placeholder='请输入关键词']"
             logging.info(self.keyword_input_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.keyword_input_xpath).send_keys(self.keyword["kw"])
 
             self.keyword_type_xpath = f"//div[@class='filter-row'][7]//span[contains(., '{self.keyword['kwtype']}')]"
             logging.info(self.keyword_type_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.keyword_type_xpath).click()
 
             self.keyword_mode_xpath = f"//div[@class='filter-row'][7]//label/span[contains(., '{self.keyword['kwmode']}')]"
             logging.info(self.keyword_mode_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.keyword_mode_xpath).click()
 
             self.keyword_click_xpath = "//div[@class='filter-row'][7]//button[contains(., '搜索')]"
             logging.info(self.keyword_click_xpath)
-            self.browser.implicitly_wait(1)
+            self.browser.implicitly_wait(10)
             self.browser.find_element_by_xpath(self.keyword_click_xpath).click()
 
             self.article_title_xpath = "//tbody/tr[{}]/td[1]//span"
@@ -124,39 +126,52 @@ class ArticleCrawler(CrawlerFormatter):
         # self.browser.minimize_window()
 
         #
-        print(self.get_article())
+        i = 0
+        logging.info("获取文章================================")
+        while True:
+            try:
+                for i in range(1,16):
+                    info = self.get_article(i)
+                    logging.info(f"{info}")
+            except Exception as e:
+                logging.warning(f"获取文章==============================失败 {e.args[0]}")
+                self.browser.refresh()
 
-    def get_article(self):
+
+    def get_article(self, i):
         # 获取文章：标题，正文，来源，作者，领域，类型，时间，阅读，评论
-        for i in range(1, 16):
-            article_title = self.browser.find_element_by_xpath(self.article_title_xpath.format(i)).get_attribute(
-                "innerText")
+        article_title = self.browser.find_element_by_xpath(self.article_title_xpath.format(i)).get_attribute(
+            "innerText")
 
-            article_source = self.browser.find_element_by_xpath(self.article_source_xpath.format(i)).get_attribute(
-                "innerText")
-            article_author = self.browser.find_element_by_xpath(self.article_author_xpath.format(i)).get_attribute(
-                "innerText")
-            article_field = self.browser.find_element_by_xpath(self.article_field_xpath.format(i)).get_attribute(
-                "innerText")
-            article_time = self.browser.find_element_by_xpath(self.article_time_xpath.format(i)).get_attribute(
-                "innerText")
-            logging.info(f"{article_title},{article_time},{article_field},{article_author},{article_source}")
-            self.browser.find_element_by_xpath(self.article_download_1_xpath.format(i)).click()
-            self.browser.implicitly_wait(1)
-            self.browser.find_element_by_xpath(self.article_download_2_xpath).click()
-            self.browser.implicitly_wait(2)
-            self.browser.find_element_by_xpath(self.article_download_3_xpath).click()
-            self.browser.implicitly_wait(3)
-            self.browser.switch_to.frame("ueditor_0")
-            article_document = self.browser.find_element_by_xpath(self.article_download_4_xpath).get_attribute(
-                "outerHTML")
-            self.browser.implicitly_wait(3)
-            self.browser.find_element_by_xpath(self.article_download_5_xpath).click()
-            self.browser.implicitly_wait(1)
-            return [article_title, article_document, article_source, article_author, article_field, article_time]
-        self.browser.find_element_by_xpath(self.next_page_xpath)
+        article_source = self.browser.find_element_by_xpath(self.article_source_xpath.format(i)).get_attribute(
+            "innerText")
+        article_author = self.browser.find_element_by_xpath(self.article_author_xpath.format(i)).get_attribute(
+            "innerText")
+        article_field = self.browser.find_element_by_xpath(self.article_field_xpath.format(i)).get_attribute(
+            "innerText")
+        article_time = self.browser.find_element_by_xpath(self.article_time_xpath.format(i)).get_attribute(
+            "innerText")
+        logging.info(f"{article_title},{article_time},{article_field},{article_author},{article_source}")
+        self.browser.implicitly_wait(30)
+        time.sleep(5)
+        self.browser.find_element_by_xpath(self.article_download_1_xpath.format(i)).click()
+        time.sleep(5)
+        self.action.move_to_element(self.browser.find_element_by_xpath("//div[@class='layui-layer-btn layui-layer-btn-']")).perform()
+        self.action.move_to_element(self.browser.find_element_by_xpath(self.article_download_2_xpath)).perform()
+        time.sleep(1)
+        self.action.click(self.browser.find_element_by_xpath(self.article_download_2_xpath)).perform()
+        self.browser.implicitly_wait(30)
+        self.browser.find_element_by_xpath(self.article_download_3_xpath).click()
+        self.browser.implicitly_wait(30)
+        self.browser.switch_to.frame("ueditor_0")
+        article_document = self.browser.find_element_by_xpath(self.article_download_4_xpath).get_attribute(
+            "outerHTML")
+        self.browser.implicitly_wait(10)
+        self.browser.switch_to_default_content()
+        self.browser.find_element_by_xpath(self.article_download_5_xpath).click()
+        self.browser.implicitly_wait(30)
+        return [article_title, article_document, article_source, article_author, article_field, article_time]
 
-        time.sleep(50)
 
         #
         # time.sleep(5)
