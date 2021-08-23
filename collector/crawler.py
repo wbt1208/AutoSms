@@ -6,6 +6,7 @@ import logging
 import sys
 from xml import etree
 
+
 class CrawlerFormatter:
     def __init__(self):
         self.browser = ChromeFectory(conf).get_chrome()
@@ -15,6 +16,7 @@ class CrawlerFormatter:
 
     def __del__(self):
         self.browser.close()
+
 
 class ArticleCrawler(CrawlerFormatter):
     def __init__(self):
@@ -27,8 +29,6 @@ class ArticleCrawler(CrawlerFormatter):
         self.read_numbers = paramters["read_numbers"]
         self.time = paramters["time"]
         self.keyword = paramters["keyword"]
-
-
 
     def get_xpath(self):
         logging.info("解析xpath=========================")
@@ -83,14 +83,22 @@ class ArticleCrawler(CrawlerFormatter):
             self.browser.implicitly_wait(1)
             self.browser.find_element_by_xpath(self.keyword_click_xpath).click()
 
-            self.title_xpath = ""
-            self.
+            self.article_title_xpath = "//tbody/tr[{}]/td[1]//span"
+            self.article_source_xpath = "//tbody/tr[{}]/td[2]"
+            self.article_author_xpath = "//tbody/tr[{}]/td[3]"
+            self.article_field_xpath = "//tbody/tr[{}]/td[4]"
+            self.article_time_xpath = "//tbody/tr[{}]/td[6]"
+            self.article_download_1_xpath = "//tbody/tr[{}]/td[9]/span[5]"
+            self.article_download_2_xpath = "//div[@class='layui-layer-btn layui-layer-btn-']//a[contains(., '是')]"
+            self.article_download_3_xpath = "//div[@class='main-menu fl']//span[contains(., '编辑器')]"
+            self.article_download_4_xpath = "/html/body"
+            self.article_download_5_xpath = "//div[@class='main-menu fl']//span[contains(., '自媒体库')]"
+            self.next_page_xpath = "//button[@class='btn-next']"
 
             logging.info("解析xpath=======================成功")
         except Exception as e:
             logging.error(f"解析xpath=====================失败 type = {e.__class__.__name__} info = {e.args[0]}")
             sys.exit(2)
-
 
     def article_crawler_1zhuan(self):
         # 易撰链接
@@ -113,21 +121,42 @@ class ArticleCrawler(CrawlerFormatter):
         self.get_xpath()
 
         # 最小化
-        self.browser.minimize_window()
+        # self.browser.minimize_window()
+
+        #
+        print(self.get_article())
 
     def get_article(self):
         # 获取文章：标题，正文，来源，作者，领域，类型，时间，阅读，评论
-        while True:
-            for i in range(15):
+        for i in range(1, 16):
+            article_title = self.browser.find_element_by_xpath(self.article_title_xpath.format(i)).get_attribute(
+                "innerText")
 
-
-
-
-
-
+            article_source = self.browser.find_element_by_xpath(self.article_source_xpath.format(i)).get_attribute(
+                "innerText")
+            article_author = self.browser.find_element_by_xpath(self.article_author_xpath.format(i)).get_attribute(
+                "innerText")
+            article_field = self.browser.find_element_by_xpath(self.article_field_xpath.format(i)).get_attribute(
+                "innerText")
+            article_time = self.browser.find_element_by_xpath(self.article_time_xpath.format(i)).get_attribute(
+                "innerText")
+            logging.info(f"{article_title},{article_time},{article_field},{article_author},{article_source}")
+            self.browser.find_element_by_xpath(self.article_download_1_xpath.format(i)).click()
+            self.browser.implicitly_wait(1)
+            self.browser.find_element_by_xpath(self.article_download_2_xpath).click()
+            self.browser.implicitly_wait(2)
+            self.browser.find_element_by_xpath(self.article_download_3_xpath).click()
+            self.browser.implicitly_wait(3)
+            self.browser.switch_to.frame("ueditor_0")
+            article_document = self.browser.find_element_by_xpath(self.article_download_4_xpath).get_attribute(
+                "outerHTML")
+            self.browser.implicitly_wait(3)
+            self.browser.find_element_by_xpath(self.article_download_5_xpath).click()
+            self.browser.implicitly_wait(1)
+            return [article_title, article_document, article_source, article_author, article_field, article_time]
+        self.browser.find_element_by_xpath(self.next_page_xpath)
 
         time.sleep(50)
-
 
         #
         # time.sleep(5)
@@ -137,11 +166,12 @@ class ArticleCrawler(CrawlerFormatter):
 
         # 登录
 
-        #解析文章标题
+        # 解析文章标题
 
-        #解析富文本
+        # 解析富文本
 
         # return：
+
     def get_cookies(self, url):
         if self.auto_login:
             pass
@@ -151,7 +181,8 @@ class ArticleCrawler(CrawlerFormatter):
             with open('cookies.json', "w+", encoding="utf-8") as fp:
                 self.browser.implicitly_wait(5)
                 json.dump(self.browser.get_cookies(), fp, indent=4)
-    def add_cookies(self, url, init_cookies = True):
+
+    def add_cookies(self, url, init_cookies=True):
         if init_cookies:
             self.get_cookies(url)
         with open("cookies.json", "r", encoding="utf-8") as fp:
@@ -167,10 +198,6 @@ class ArticleCrawler(CrawlerFormatter):
                 logging.info(f"添加cookies=====================失败 type = {e.__class__.__name__} info = {e.args[0]}")
 
 
-
-
 class ImageCrawler(CrawlerFormatter):
     def __init__(self):
         CrawlerFormatter.__init__(self)
-
-
