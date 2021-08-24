@@ -1,3 +1,5 @@
 from crawler import ArticleCrawler
+import logging
 a = ArticleCrawler()
-a.article_crawler_1zhuan()
+while True:
+    logging.info(a.article_crawler_1zhuan())
