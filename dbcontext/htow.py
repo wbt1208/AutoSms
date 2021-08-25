@@ -1,11 +1,10 @@
 import pypandoc
-from parser_conf import conf
 import time
 import logging
 import os
 
 class HtmlToWord():
-    def __init__(self):
+    def __init__(self,conf):
         self.html_path = conf["html_path"]
         self.word_path = conf["word_path"]
         if not os.path.exists(self.html_path):

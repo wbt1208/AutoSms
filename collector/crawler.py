@@ -21,7 +21,7 @@ class ArticleCrawler:
             paramters_map["keyword"][2]: "1" if self.conf["keyword"] == "" else self.conf["keyword"],
         }
         self.update_headers()
-        self.saver = HtmlSver()
+        self.saver = HtmlSver(conf)
 
     def update_article_list_re_body(self):
         date_1 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() - 6 * 24 * 60 * 60))

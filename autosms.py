@@ -32,8 +32,8 @@ def init_logging(filename, mode):
 
 if __name__ == '__main__':
     init_logging(conf["log_filename"], conf["log_mode"])
-    getter = Getter()
-    h2w = HtmlToWord()
+    getter = Getter(conf)
+    h2w = HtmlToWord(conf)
     pgetter = Process(target=getter.run, args = ())
     ph2w = Process(target=h2w.run, args=())
 
