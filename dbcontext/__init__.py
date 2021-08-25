@@ -10,7 +10,8 @@ class HtmlSver():
     def save(self, file_name, body):
         _file_name  = file_name.replace(" ","").replace("?", "").replace("？","").\
             replace("|", "").replace("、", "").replace("*","").replace(">", "").replace("<", "").\
-            replace("\\", "").replace("/", "").replace("!", "").replace("@", "").replace("！","")
+            replace("\\", "").replace("/", "").replace("!", "").replace("@", "").replace("！","").replace(":", "").\
+            replace("：", "")
         try:
             __file_name = os.path.join(self.html_path, _file_name)
             __file_name = _file_name.replace("\\\\","\\")
