@@ -1,5 +1,6 @@
 import os
 from dbcontext.htow import HtmlToWord
+import logging
 class HtmlSver():
     def __init__(self, conf):
         self.html_path = conf["html_path"]
@@ -16,9 +17,14 @@ class HtmlSver():
             with open(file_name, "w+", encoding="utf-8") as fp:
                 fp.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">")
                 fp.write(body)
+                fp.flush()
+                logging.info(f"{__file_name}=====下载成功")
+
         except Exception:
             __file_name = self.html_path + "/" + _file_name
             with open(file_name, "w+", encoding="utf-8") as fp:
                 fp.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">")
                 fp.write(body)
+                fp.flush()
+                logging.info(f"{__file_name}=====下载成功")
 
