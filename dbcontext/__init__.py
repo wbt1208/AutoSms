@@ -8,24 +8,18 @@ class HtmlSver():
             os.makedirs(self.html_path)
 
     def save(self, file_name, body):
-        _file_name  = file_name.replace(" ","").replace("?", "").replace("？","").\
+        file_name  = file_name.replace(" ","").replace("?", "").replace("？","").\
             replace("|", "").replace("、", "").replace("*","").replace(">", "").replace("<", "").\
             replace("\\", "").replace("/", "").replace("!", "").replace("@", "").replace("！","").replace(":", "").\
             replace("：", "")
         try:
-            __file_name = os.path.join(self.html_path, _file_name)
-            __file_name = _file_name.replace("\\\\","\\")
-            with open(__file_name, "w+", encoding="utf-8") as fp:
+            file_name = os.path.join(self.html_path, file_name)
+            with open(file_name, "w+", encoding="utf-8") as fp:
                 fp.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">")
                 fp.write(body)
                 fp.flush()
-                logging.info(f"{__file_name}=====下载成功")
+                logging.info(f"{file_name}=====下载成功")
 
         except Exception:
-            __file_name = self.html_path + "/" + _file_name
-            with open(__file_name, "w+", encoding="utf-8") as fp:
-                fp.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">")
-                fp.write(body)
-                fp.flush()
-                logging.info(f"{__file_name}=====下载成功")
+            logging.info(f"{file_name}=====下载失败")
 
