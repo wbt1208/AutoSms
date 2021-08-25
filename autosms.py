@@ -1,6 +1,9 @@
 import logging
 import sys
 from parser_conf import conf
+from collector import Getter
+from dbcontext import HtmlToWord
+from multiprocessing import Process
 
 def init_logging(filename, mode):
     logger = logging.getLogger()
@@ -29,3 +32,13 @@ def init_logging(filename, mode):
 
 if __name__ == '__main__':
     init_logging(conf["log_filename"], conf["log_mode"])
+    getter = Getter()
+    h2w = HtmlToWord()
+    pgetter = Process(target=getter.run, args = ())
+    ph2w = Process(target=h2w.run, args=())
+
+    pgetter.start()
+    ph2w.start()
+
+    pgetter.join()
+    ph2w.join()
