@@ -11,6 +11,6 @@ class HtmlSver():
             replace("|", "").replace("、", "").replace("*","").replace(">", "").replace("<", "").\
             replace("\\", "").replace("/", "")
         file_name = os.path.join(self.html_path, file_name)
-        with open(file_name, "w", encoding="utf-8") as fp:
+        with open(file_name, "w+", encoding="utf-8") as fp:
             fp.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">")
             fp.write(body)
