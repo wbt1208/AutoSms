@@ -73,7 +73,8 @@ class ArticleCrawler:
         date_2 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() + 24 * 60 * 60))
         # 更新
         self.init_list_body["PageIndex"] = str(self.page)
-        self.init_list_body["Where[0][Value]"] = date_1
+        if confutil.get_paramters()["field"] == "全部":
+            self.init_list_body["Where[0][Value]"] = date_1
         self.init_list_body["Where[1][Value]"] = date_2
     def construct_detail_body(self, detail_url):
         self.init_detail_body["hmcturl"] = f"/Common/Tool/ToUrl?data={detail_url}"
@@ -84,6 +85,7 @@ class ArticleCrawler:
             self.page += 1
             self.construct_headers()
             self.construct_list_body()
+            print(self.init_list_body)
             try:
                 res = requests.post(url=url_newlist, data=self.init_list_body, headers=self.init_headers)
             except Exception as e:
