@@ -100,6 +100,7 @@ class ArticleCrawler:
                     time.sleep(3)
                     for article in article_json_lists:
                         hmcttitle = article["hmcttitle"]
+                        logging.info(f"采集 》》》》{hmcttitle}》》》》》中")
                         tags = article["tags"]
                         hmctdate = article["hmctdate"]
                         hmctsource = article["hmctsource"]
