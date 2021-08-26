@@ -92,6 +92,7 @@ class ArticleCrawler:
                 article_json = res.json()
                 try:
                     article_json_lists = article_json["Data"]["List"]
+                    logging.info(f"{article_json}")
                 except Exception as e:
                     raise ReturnCodeException(*e.args)
                 else:
