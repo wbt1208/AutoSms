@@ -9,19 +9,67 @@ from dbcontext import HtmlSver
 
 class ArticleCrawler:
     def __init__(self, conf):
-        self.conf = conf["paramters"]
-        self.list_re_body_bat = {
-            paramters_map["source"]: source_map[self.conf["source"]],
-            paramters_map["field"][0]: field_map[self.conf["field"]][0],
-            paramters_map["field"][1]: field_map[self.conf["field"]][1],
-            paramters_map["field"][2]: field_map[self.conf["field"]][2],
-
-            paramters_map["keyword"][0]: "hmcttype" if self.conf["keyword"] == "" else "hmcttitle",
-            paramters_map["keyword"][1]: "1" if self.conf["keyword"] == "" else "2",
-            paramters_map["keyword"][2]: "1" if self.conf["keyword"] == "" else self.conf["keyword"],
-        }
-        self.update_headers()
+        self.conf = conf
+        self.paramters = conf["paramters"]
         self.saver = HtmlSver(conf)
+        self.page = 0
+        self.init_headers = {
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept-Language": "zh-CN,zh;q=0.9",
+            "ajax": "true",
+            "Connection": "keep-alive",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Cookie": self.conf["cookies"],
+            "Host": "www.yizhuan5.com",
+            "Origin": "http://www.yizhuan5.com",
+            "Referer": "http://www.yizhuan5.com/work.html",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        self.init_list_body =  {
+            "PageIndex": "1",
+            "PageSize": "15",
+            "isppl": "true",
+            "type": "1",
+            "CID": "0",
+            "OrderBy[0][Name]": "hmctdate",
+            "OrderBy[0][OrderByType]": "2",
+            "Where[0][Name]": "HMCTDate",
+            "Where[0][Symbol]": "5",
+            "Where[0][Value]": f"{date_1}",
+            "Where[1][Name]": "HMCTDate",
+            "Where[1][Symbol]": "6",
+            "Where[1][Value]": f"{date_2}",
+            "Where[2][Name]": "hmcttype",
+            "Where[2][Symbol]": "1",
+            "Where[2][Value]": "1"
+        }                       
+        self.init_detail_body = {
+            "hmcturl": "/Common/Tool/ToUrl?"
+        }
+    def construct_headers(self):
+        logging.info("构造请求头=======")
+    def construct_list_body(self):
+        logging.info("构造列表页请求体=======")
+        # 只需要更新一次的
+        if self.page <= 1:
+            temp_body = {
+                paramters_map["source"]: source_map[self.conf["source"]],
+                paramters_map["field"][0]: field_map[self.conf["field"]][0],
+                paramters_map["field"][1]: field_map[self.conf["field"]][1],
+                paramters_map["field"][2]: field_map[self.conf["field"]][2],
+
+                paramters_map["keyword"][0]: "hmcttype" if self.conf["keyword"] == "" else "hmcttitle",
+                paramters_map["keyword"][1]: "1" if self.conf["keyword"] == "" else "2",
+                paramters_map["keyword"][2]: "1" if self.conf["keyword"] == "" else self.conf["keyword"],
+            }
+            for k, v in temp.items():
+                self.init_list_body[k] = v
+        
+       date_1 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() - 6 * 24 * 60 * 60))
+       date_2 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() + 24 * 60 * 60))
+         # 更新
 
     def update_article_list_re_body(self):
         date_1 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() - 6 * 24 * 60 * 60))
@@ -60,20 +108,7 @@ class ArticleCrawler:
         self.detail_body = detail_body
 
     def update_headers(self):
-        self.headers = {
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Encoding": "gzip, deflate",
-            "Accept-Language": "zh-CN,zh;q=0.9",
-            "ajax": "true",
-            "Connection": "keep-alive",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Cookie": self.conf["cookies"],
-            "Host": "www.yizhuan5.com",
-            "Origin": "http://www.yizhuan5.com",
-            "Referer": "http://www.yizhuan5.com/work.html",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
-            "X-Requested-With": "XMLHttpRequest"
-        }
+        self.headers = 
 
     def article_crawler_1zhuan(self):
         self.page = 0
