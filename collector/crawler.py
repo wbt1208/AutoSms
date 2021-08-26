@@ -47,7 +47,8 @@ class ArticleCrawler:
             "Where[2][Value]": "1"
         }                       
         self.init_detail_body = {
-            "hmcturl": "/Common/Tool/ToUrl?"
+            "hmcturl": ""
+
         }
     def construct_headers(self):
         logging.info("构造请求头=======")
@@ -90,16 +91,15 @@ class ArticleCrawler:
 
             if res and res.status_code == 200:
                 article_json = res.json()
-                logging.info(f"{article_json}")
                 try:
                     article_json_lists = article_json["Data"]["List"]
                 except Exception as e:
+                    logging.info(f"{article_json}")
                     raise ReturnCodeException(*e.args)
                 else:
                     time.sleep(3)
                     for article in article_json_lists:
                         hmcttitle = article["hmcttitle"]
-                        logging.info(hmcttitle)
                         tags = article["tags"]
                         hmctdate = article["hmctdate"]
                         hmctsource = article["hmctsource"]
@@ -110,14 +110,19 @@ class ArticleCrawler:
                         except Exception as e:
                             raise ConnectException(*e.args)
                         else:
-                            if res_d and res_d.status_code == 200:
-                                detail_json = res_d.json()
-                                hmctdeatil = detail_json["Data"]["content"]
-                                # print(hmcttitle, hmctsource, hmctdate, tags, hmctdeatil)
-                                file_name = f"{hmcttitle}_{hmctsource}_{hmctdate}.html"
-                                self.saver.save(file_name, hmcttitle,hmctdeatil)
+
+
+                                if res_d and res_d.status_code == 200:
+                                    detail_json = res_d.json()
+                                    try:
+                                        hmctdeatil = detail_json["Data"]["content"]
+                                    except Exception as e:
+                                        logging.info(f"{detail_json} {e.args}")
+                                        raise ReturnCodeException(*e.args)
+                                    # print(hmcttitle, hmctsource, hmctdate, tags, hmctdeatil)
+                                    file_name = f"{hmcttitle}_{hmctsource}_{hmctdate}.html"
+                                    self.saver.save(file_name, hmcttitle,hmctdeatil)
+
                         finally:
                             time.sleep(int(confutil.get_interval()))
-
-
 
