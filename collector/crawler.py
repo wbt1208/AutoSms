@@ -37,10 +37,10 @@ class ArticleCrawler:
             "OrderBy[0][OrderByType]": "2",
             "Where[0][Name]": "HMCTDate",
             "Where[0][Symbol]": "5",
-            "Where[0][Value]": f"{date_1}",
+            "Where[0][Value]": "",
             "Where[1][Name]": "HMCTDate",
             "Where[1][Symbol]": "6",
-            "Where[1][Value]": f"{date_2}",
+            "Where[1][Value]": "",
             "Where[2][Name]": "hmcttype",
             "Where[2][Symbol]": "1",
             "Where[2][Value]": "1"
@@ -67,51 +67,17 @@ class ArticleCrawler:
             for k, v in temp.items():
                 self.init_list_body[k] = v
         
-       date_1 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() - 6 * 24 * 60 * 60))
-       date_2 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() + 24 * 60 * 60))
-         # 更新
-
-    def update_article_list_re_body(self):
         date_1 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() - 6 * 24 * 60 * 60))
         date_2 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() + 24 * 60 * 60))
-        list_body = {
-            "PageIndex": "1",
-            "PageSize": "15",
-            "isppl": "true",
-            "type": "1",
-            "CID": "0",
-            "OrderBy[0][Name]": "hmctdate",
-            "OrderBy[0][OrderByType]": "2",
-            "Where[0][Name]": "HMCTDate",
-            "Where[0][Symbol]": "5",
-            "Where[0][Value]": f"{date_1}",
-            "Where[1][Name]": "HMCTDate",
-            "Where[1][Symbol]": "6",
-            "Where[1][Value]": f"{date_2}",
-            "Where[2][Name]": "hmcttype",
-            "Where[2][Symbol]": "1",
-            "Where[2][Value]": "1"
-        }
-        list_body["PageIndex"] = str(self.page)
-        list_body["Where[0][Value]"] = date_1
-        list_body["Where[1][Value]"] = date_2
-        if self.page <= 1:
-            for k, v in self.list_re_body_bat.items():
-                list_body[k] = v
-        self.list_re_body = list_body
-
-    def update_article_detail_body(self, detail_url):
-        detail_body = {
-            "hmcturl": "/Common/Tool/ToUrl?data=d8k6WnvzeGqeCN8bTwNz3ab6f63kBXYxxaErf4AnM%2fM%2bQCx8oROdvRoODhcyF%2f8VE1gRZt9%2fWV7E7WnnEJ%2bJYJNJe%2b9VI%2fYqzaYay%2beQDA00YthAzXe%2fDnczdBYyT7lPBUJt0ZtBNT3mLNNi9GErdTel9f%2bHlIrvDrA4lAQj6%2b4%3d"
-        }
-        detail_body["hmcturl"] = f"/Common/Tool/ToUrl?data={detail_url}"
-        self.detail_body = detail_body
-
-    def update_headers(self):
-        self.headers = 
+        # 更新
+        self.init_list_body["PageIndex"] = str(self.page)
+        self.init_list_body["Where[0][Value]"] = date_1
+        self.init_list_body["Where[1][Value]"] = date_2
+    def construct_detail_body(self, url):
+        self.init_detail_body["hmcturl"] = f"/Common/Tool/ToUrl?data={detail_url}"
+    
 
     def article_crawler_1zhuan(self):
-        self.page = 0
         res = None
         while True:
             self.page += 1
