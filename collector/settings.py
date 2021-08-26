@@ -1,5 +1,6 @@
 # from parser_conf import conf
 import time
+from common.common import confutil
 
 paramters_map = {
     "source": "CID",
@@ -11,12 +12,25 @@ source_map = {
     "百家号": "2",
     "头条号": "5"
 }
-
-field_map = {
-    "全部":["HMCTDate", "5", ""],
-    "娱乐":["acid", "1", "4"],
-    "搞笑":["acid", "1", "19"],
-    "历史":["acid", "1", "30"]
-}
-
+if confutil.get_paramters()["field"] == "全部":
+    field_map = {
+        "全部":["HMCTDate", "5", ""],
+        "娱乐":["acid", "1", "60665"],
+        "搞笑":["acid", "1", "60666"],
+        "历史":["acid", "1", "60668"]
+    }
+if confutil.get_paramters()["field"] in "头条号":
+    field_map = {
+        "全部":["HMCTDate", "5", ""],
+        "娱乐":["acid", "1", "3533"],
+        "搞笑":["acid", "1", "3505"],
+        "历史":["acid", "1", "3540"]
+    }
+if confutil.get_paramters()["field"] in "百家号":
+    field_map = {
+        "全部":["HMCTDate", "5", ""],
+        "娱乐":["acid", "4", "3533"],
+        "搞笑":["acid", "19", "3505"],
+        "历史":["acid", "30", "3540"]
+    }
 
