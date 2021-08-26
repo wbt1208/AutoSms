@@ -90,10 +90,10 @@ class ArticleCrawler:
 
             if res and res.status_code == 200:
                 article_json = res.json()
+                logging.info(f"{article_json}")
                 try:
                     article_json_lists = article_json["Data"]["List"]
                 except Exception as e:
-                    logging.info(f"{article_json}")
                     raise ReturnCodeException(*e.args)
                 else:
                     time.sleep(3)

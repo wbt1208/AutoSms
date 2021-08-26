@@ -6,7 +6,7 @@ from dbcontext import HtmlToWord
 from multiprocessing import Process
 
 def init_logging(filename, mode):
-    logger = logging.getLogger()
+    logger = logging.getLogger('')
     for handler in logger.handlers:
         logger.removeHandler(handler)
     stdhandler = logging.StreamHandler(sys.stdout)
@@ -26,6 +26,8 @@ def init_logging(filename, mode):
     logger.addHandler(filehandler)
     logger.setLevel(logging.INFO)
 
+init_logging("autosms.log", "w")
+
 def main():
     getter = Getter()
     h2w = HtmlToWord()
@@ -39,9 +41,8 @@ def main():
 
 
 if __name__ == '__main__':
-    init_logging("./autosms.log", "w+")
     try:
         main()
     except Exception as e:
-        logging.info(f"run error {e.args}")
+        logging.error(f"run error {e.args}")
         os.system("pause")
