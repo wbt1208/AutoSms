@@ -2,11 +2,11 @@ import pypandoc
 import time
 import logging
 import os
-
+from common.common import confutil
 class HtmlToWord():
-    def __init__(self,conf):
-        self.html_path = conf["html_path"]
-        self.word_path = conf["word_path"]
+    def __init__(self):
+        self.html_path = confutil.get_html_path()
+        self.word_path = confutil.get_word_path()
         if not os.path.exists(self.html_path):
             os.makedirs(self.html_path)
         if not  os.path.exists(self.word_path):
@@ -17,19 +17,12 @@ class HtmlToWord():
             for filename in os.listdir(self.html_path):
                 source_file = os.path.join(self.html_path, filename)
                 dst_file = os.path.join(self.word_path, filename.replace(".html", ".docx"))
-                flag = False
-                for dst_filename in os.listdir(self.word_path):
-
-                    if self.get_title(filename) == self.get_title(dst_filename):
-                        flag = True
-                if not flag:
+                if not os.path.exists(dst_file):
                     try:
+                        logging.info(f"convert {source_file} to {dst_file}")
                         pypandoc.convert_file(source_file, 'docx', outputfile = dst_file)
                     except Exception as e:
                         logging.error(f"html2word ===============   {e.args}")
-            time.sleep(20)
-    @staticmethod
-    def get_title(filename):
-        return filename.split("_")[0]
+                time.sleep(20)
 
 
