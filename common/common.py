@@ -43,22 +43,22 @@ class ConfUtil(ConfUtilFornatter):
         default_conf = {
     "autosms_mode": 1,
     "paramters": {
-        "source": "百家号",
-        "field": "历史",
-        "keyword": ""
-           },
-    "interval": "20",
-    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Token=9f5ca04b-00c6-4706-9079-1815f0c545f2; ct=9f5ca04b-00c6-4706-9079-1815f0c545f2_1629985876006; CNZZDATA1278145158=2113046919-1629553933-null%7C1629981519; ckt=1629985877; Hm_lpvt_119d728e13405b1761bac1057994ec52=1629985877",
-    "html_path": "html",
-    "word_path": "wold",
-    "mysqldb": {
-        "host": "",
-        "port": "",
-        "user": "",
-        "passwd": "",
-        "dbname": ""
+            "source": "百家号",
+            "field": "历史",
+            "keyword": ""
+            },
+        "interval": "20",
+        "cookies": "",
+        "html_path": ".\\html",
+        "word_path": ".\\word",
+        "mysqldb": {
+            "host": "",
+            "port": "",
+            "user": "",
+            "passwd": "",
+            "dbname": ""
+        }
     }
-}
         with open("./conf.json", "w+", encoding="utf-8") as fp:
             json.dump(default_conf, fp, indent=4)
 
