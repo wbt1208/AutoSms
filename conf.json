@@ -3,12 +3,17 @@
     "paramters": {
         "source": "百家号",
         "field": "历史",
-        "keyword": ""
+        "start_date": "2020-06-16",
+        "end_date": "2021-06-16",
+        "keyword": "二战"
            },
     "interval": "20",
-    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Token=9f5ca04b-00c6-4706-9079-1815f0c545f2; ct=9f5ca04b-00c6-4706-9079-1815f0c545f2_1629985876006; CNZZDATA1278145158=2113046919-1629553933-null%7C1629981519; ckt=1629985877; Hm_lpvt_119d728e13405b1761bac1057994ec52=1629985877",
+    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Token=2d34d0a9-03ef-4d58-bfeb-4751571ce368; scene_id=69791513; ct=2d34d0a9-03ef-4d58-bfeb-4751571ce368_1630071081449; CNZZDATA1278145158=2113046919-1629553933-null%7C1630067977; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630071083; ckt=1630071951",
     "html_path": "html",
     "word_path": "wold",
+    "forgery_html_path": "forgery_html",
+    "forgery_word_path": "forgery_word",
+    "forgery_ratio":"20",
     "mysqldb": {
         "host": "",
         "port": "",

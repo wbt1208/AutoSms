@@ -11,28 +11,6 @@ class ConfUtilFornatter(object):
         else:
             return cls._singleton
 
-# from ctypes import windll
-# import time
-# import win32file
-# from win32file import *
-#
-# def is_open(filename):
-#     try:
-#         # 首先获得句柄
-#         vHandle = win32file.CreateFile(filename, GENERIC_READ, 0, None, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, None)
-#         # 判断句柄是否等于INVALID_HANDLE_VALUE
-#         if int(vHandle) == INVALID_HANDLE_VALUE:
-#             win32file.CloseHandle(vHandle)
-#             logging.info(f"{filename} is already open")
-#             return True  # file is already open
-#         else:
-#             return False
-#     except Exception as e:
-#         return True
-
-
-
-
 
 class ConfUtil(ConfUtilFornatter):
     def __init__(self):
@@ -44,13 +22,18 @@ class ConfUtil(ConfUtilFornatter):
             "autosms_mode": 1,
             "paramters": {
                 "source": "百家号",
-                "field": "全部",
-                "keyword": "",
-                "interval": "20",
-                "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666; Token=d6040574-6c8a-4bac-b1a9-4aabd2cabac3; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; ct=d6040574-6c8a-4bac-b1a9-4aabd2cabac3_1629895511448; CNZZDATA1278145158=2113046919-1629553933-null%7C1629895454; Hm_lpvt_119d728e13405b1761bac1057994ec52=1629895537; ckt=1629895550"
+                "field": "历史",
+                "start_date": "2020-06-16",
+                "end_date": "2021-06-16",
+                "keyword": "二战"
             },
-            "html_path": ".\\html",
-            "word_path": ".\\wold",
+            "interval": "20",
+            "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Token=2d34d0a9-03ef-4d58-bfeb-4751571ce368; scene_id=69791513; ct=2d34d0a9-03ef-4d58-bfeb-4751571ce368_1630071081449; CNZZDATA1278145158=2113046919-1629553933-null%7C1630067977; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630071083; ckt=1630071951",
+            "html_path": "html",
+            "word_path": "wold",
+            "forgery_html_path": "forgery_html",
+            "forgery_word_path": "forgery_word",
+            "forgery_ratio": "20",
             "mysqldb": {
                 "host": "",
                 "port": "",
@@ -79,14 +62,47 @@ class ConfUtil(ConfUtilFornatter):
 
     def get_paramters(self):
         return self.conf["paramters"]
+
     def get_interval(self):
+        if int(self.conf["interval"]) < 20:
+            logging.warning("》》》》》》》采集间隔不得低于20s》》》》》》》")
+            self.conf["interval"] = "20"
         return self.conf["interval"]
+
     def get_html_path(self):
         return self.conf["html_path"]
+
     def get_word_path(self):
         return self.conf["word_path"]
 
+    def get_start_date(self):
+        return self.conf["paramters"]["start_date"] + " 00:00"
+
+    def get_end_date(self):
+        return self.conf["paramters"]["end_date"] + " 00:00"
+
+    def get_forgery_html(self):
+        return self.conf["forgery_html_path"]
+
+    def get_forgery_word(self):
+        return self.conf["forgery_word_path"]
+
+    def get_forgery_ratio(self):
+        return self.conf["forgery_ratio"]
+
+    # import win32file
+    # def is_used(filename):
+    #     try:
+    #         vHandel = win32file.CreateFile(filename, win32file.GENERIC_READ, 0, None, win32file.OPEN_EXISTING,
+    #                                        win32file.FILE_ATTRIBUTE_NORMAL, None)
+    #     except Exception as e:
+    #         if "正在使用" in e.args[-1]:
+    #         return True
+    #     else:
+    #         raise FileExistsError(*e.args)
+    #     else:
+    #         win32file.CloseHandle(vHandel)
+    #         return False
+
+
 confutil = ConfUtil()
-
-
-

@@ -6,6 +6,7 @@ url_newlist = "http://www.yizhuan5.com/Mediabrary/data/HotMContent"
 from common.common import confutil
 from dbcontext import HtmlSver
 from collector.exceptions import *
+import time
 
 
 class ArticleCrawler:
@@ -36,15 +37,21 @@ class ArticleCrawler:
             "CID": "0",
             "OrderBy[0][Name]": "hmctdate",
             "OrderBy[0][OrderByType]": "2",
-            "Where[0][Name]": "HMCTDate",
-            "Where[0][Symbol]": "5",
+            "Where[0][Name]": "",
+            "Where[0][Symbol]": "",
             "Where[0][Value]": "",
             "Where[1][Name]": "HMCTDate",
-            "Where[1][Symbol]": "6",
+            "Where[1][Symbol]": "5",
             "Where[1][Value]": "",
-            "Where[2][Name]": "hmcttype",
-            "Where[2][Symbol]": "1",
-            "Where[2][Value]": "1"
+            "Where[2][Name]": "HMCTDate",
+            "Where[2][Symbol]": "6",
+            "Where[2][Value]": "",
+            "Where[3][Name]": "hmcttype",
+            "Where[3][Symbol]": "1",
+            "Where[3][Value]": "1",
+            "Where[4][Name]": "hmcttype",
+            "Where[4][Symbol]": "1",
+            "Where[4][Value]": "1"
         }                       
         self.init_detail_body = {
             "hmcturl": ""
@@ -68,14 +75,13 @@ class ArticleCrawler:
             }
             for k, v in temp_body.items():
                 self.init_list_body[k] = v
-        
-        date_1 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() - 6 * 24 * 60 * 60))
-        date_2 = time.strftime('%Y-%m-%d 00:00', time.localtime(time.time() + 24 * 60 * 60))
+
+
         # 更新
         self.init_list_body["PageIndex"] = str(self.page)
-        if confutil.get_paramters()["field"] == "全部":
-            self.init_list_body["Where[0][Value]"] = date_1
-        self.init_list_body["Where[1][Value]"] = date_2
+        self.init_list_body["Where[1][Value]"] = confutil.get_start_date()
+        self.init_list_body["Where[2][Value]"] = confutil.get_end_date()
+
     def construct_detail_body(self, detail_url):
         self.init_detail_body["hmcturl"] = f"/Common/Tool/ToUrl?data={detail_url}"
     
@@ -115,17 +121,16 @@ class ArticleCrawler:
                         else:
 
 
-                                if res_d and res_d.status_code == 200:
-                                    detail_json = res_d.json()
-                                    try:
-                                        hmctdeatil = detail_json["Data"]["content"]
-                                    except Exception as e:
-                                        logging.info(f"{detail_json} {e.args}")
-                                        raise ReturnCodeException(*e.args)
-                                    # print(hmcttitle, hmctsource, hmctdate, tags, hmctdeatil)
-                                    file_name = f"{hmcttitle}_{hmctsource}_{hmctdate}.html"
-                                    self.saver.save(file_name, hmcttitle,hmctdeatil)
-
+                            if res_d and res_d.status_code == 200:
+                                detail_json = res_d.json()
+                                try:
+                                    hmctdeatil = detail_json["Data"]["content"]
+                                except Exception as e:
+                                    logging.info(f"{detail_json} {e.args}")
+                                    raise ReturnCodeException(*e.args)
+                                # print(hmcttitle, hmctsource, hmctdate, tags, hmctdeatil)
+                                file_name = f"{hmcttitle}_{hmctsource}_{hmctdate}.html"
+                                self.saver.save(file_name, hmcttitle,hmctdeatil)
                         finally:
                             time.sleep(int(confutil.get_interval()))
 

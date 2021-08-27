@@ -4,6 +4,7 @@ import os
 from collector import Getter
 from dbcontext import HtmlToWord
 from multiprocessing import Process
+from forgery.forgery import Forgery
 
 def init_logging(filename, mode):
     logger = logging.getLogger('')
@@ -41,6 +42,8 @@ def main():
 
 
 if __name__ == '__main__':
+    # forgery = Forgery()
+    # forgery.run()
     try:
         main()
     except Exception as e:
