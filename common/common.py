@@ -41,24 +41,24 @@ class ConfUtil(ConfUtilFornatter):
     @staticmethod
     def set_default_conf():
         default_conf = {
-    "autosms_mode": 1,
-    "paramters": {
-            "source": "百家号",
-            "field": "历史",
-            "keyword": ""
-            },
-        "interval": "20",
-        "cookies": "",
-        "html_path": ".\\html",
-        "word_path": ".\\word",
-        "mysqldb": {
-            "host": "",
-            "port": "",
-            "user": "",
-            "passwd": "",
-            "dbname": ""
-        }
-    }
+            "autosms_mode": 1,
+            "paramters": {
+                    "source": "百家号",
+                    "field": "历史",
+                    "keyword": ""
+                    },
+                "interval": "20",
+                "cookies": "",
+                "html_path": ".\\html",
+                "word_path": ".\\word",
+                "mysqldb": {
+                    "host": "",
+                    "port": "",
+                    "user": "",
+                    "passwd": "",
+                    "dbname": ""
+                }
+            }
         with open("./conf.json", "w+", encoding="utf-8") as fp:
             json.dump(default_conf, fp, indent=4)
 
