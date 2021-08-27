@@ -1,9 +1,12 @@
 import logging
 import sys
-from parser_conf import conf
+import os
+from collector import Getter
+from dbcontext import HtmlToWord
+from multiprocessing import Process
 
 def init_logging(filename, mode):
-    logger = logging.getLogger()
+    logger = logging.getLogger('')
     for handler in logger.handlers:
         logger.removeHandler(handler)
     stdhandler = logging.StreamHandler(sys.stdout)
@@ -23,9 +26,23 @@ def init_logging(filename, mode):
     logger.addHandler(filehandler)
     logger.setLevel(logging.INFO)
 
+init_logging("autosms.log", "w")
 
+def main():
+    getter = Getter()
+    h2w = HtmlToWord()
+    pgetter = Process(target=getter.run, args = ())
+    ph2w = Process(target=h2w.run, args=())
+    pgetter.start()
+    ph2w.start()
+    pgetter.join()
+    ph2w.join()
 
 
 
 if __name__ == '__main__':
-    init_logging(conf["log_filename"], conf["log_mode"])
+    try:
+        main()
+    except Exception as e:
+        logging.error(f"run error {e.args}")
+        os.system("pause")

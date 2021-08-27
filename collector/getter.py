@@ -1,5 +1,7 @@
-from crawler import ArticleCrawler
-import logging
-a = ArticleCrawler()
-while True:
-    logging.info(a.article_crawler_1zhuan())
+from collector.crawler import ArticleCrawler
+
+class Getter():
+    def __init__(self):
+        self.articlecrawler = ArticleCrawler()
+    def run(self):
+        self.articlecrawler.article_crawler_1zhuan()
