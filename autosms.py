@@ -5,6 +5,7 @@ from collector import Getter
 from dbcontext import HtmlToWord
 from multiprocessing import Process
 from forgery.forgery import Forgery
+from common.common import confutil
 
 def init_logging(filename, mode):
     logger = logging.getLogger('')
@@ -30,20 +31,41 @@ def init_logging(filename, mode):
 init_logging("autosms.log", "w")
 
 def main():
-    getter = Getter()
-    h2w = HtmlToWord()
-    pgetter = Process(target=getter.run, args = ())
-    ph2w = Process(target=h2w.run, args=())
-    pgetter.start()
-    ph2w.start()
+    pgetter = forgeryhtml = ph2w = None
+    if confutil.get_collector_status():
+        getter = Getter()
+        pgetter = Process(target=getter.run, args=())
+    if confutil.get_forgery_status():
+        forgery = Forgery()
+        forgeryhtml = Process(target=forgery.run, args=())
+    if confutil.get_html2word_status():
+        h2w = HtmlToWord()
+        ph2w = Process(target=h2w.run, args=())
+    if confutil.get_publisher_status():
+        pass
+    if pgetter:
+        pgetter.start()
+        pgetter.join()
+    if forgeryhtml:
+        forgeryhtml.start()
+        forgeryhtml.join()
+    if ph2w:
+        ph2w.start()
+        ph2w.join()
+
+
+
+
+
+
+
     pgetter.join()
     ph2w.join()
+    forgeryhtml.join()
 
 
 
 if __name__ == '__main__':
-    # forgery = Forgery()
-    # forgery.run()
     try:
         main()
     except Exception as e:

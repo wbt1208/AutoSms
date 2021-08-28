@@ -93,6 +93,14 @@ class ConfUtil(ConfUtilFornatter):
         return self.conf["app_id"]
     def get_app_token(self):
         return self.conf["app_token"]
+    def get_collector_status(self):
+        return "enable" in self.conf["collector_status"]
+    def get_html2word_status(self):
+        return "enable" in self.conf["html2word_status"]
+    def get_forgery_status(self):
+        return "enable" in self.conf["forgery_status"]
+    def get_publisher_status(self):
+        return "enable" in self.conf["publisher_status"]
 
     # import win32file
     # def is_used(filename):
