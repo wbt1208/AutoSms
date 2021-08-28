@@ -34,13 +34,10 @@ class Forgery():
                     with open(source_file, "r", encoding="utf-8") as fp:
                         html = fp.read()
 
-                    # html_tree = etree.HTML(html)
-                    # self.bianli(html_tree)
-                    # with open(dst_file, "w", encoding="utf-8") as fp:
-                    #     fp.write(etree.tostring(html_tree, encoding="utf-8").decode())
-                    title, forgrey_html = self.forgery_1(source_file.replace(".html", ""), html)
+                    html_tree = etree.HTML(html)
+                    self.bianli(html_tree)
                     with open(dst_file, "w", encoding="utf-8") as fp:
-                        fp.write(forgrey_html)
+                        fp.write(etree.tostring(html_tree, encoding="utf-8").decode())
                     logging.info(f"> > > {source_file} > > >伪原创成功")
 
     def bianli(self, html_tree):
