@@ -3,6 +3,7 @@ from common.common import confutil
 import os
 import logging
 import requests
+from dbcontext.exception import *
 
 
 
@@ -59,11 +60,21 @@ class Forgery():
 
     def forgery_1(self, text):
         self.forgery_data_1["body"] = text
-        res = requests.post(self.forgery_api_1, data = self.forgery_data_1)
+        try:
+            res = requests.post(self.forgery_api_1, data = self.forgery_data_1)
+        except Exception as e:
+            raise ConnectException(*e.args)
+
         if res and res.status_code == 200:
-            return res.json().get("body")
+            try:
+                res_json = res.json()
+                forgery_text = res_json["body"]
+            except Exception as e:
+                raise ReturnCodeException(*e.args)
+            else:
+                return forgery_text
         else:
-            return ""
+            raise ReturnCodeException(res if not res else res.status_code)
 
     def forgery_2(self, text):
         return text
