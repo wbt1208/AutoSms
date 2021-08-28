@@ -60,10 +60,11 @@ class Forgery():
     def forgery_1(self, text):
         self.forgery_data_1.format(text)
         try:
+            logging.info(self.forgery_data_1)
             res = requests.post(self.forgery_api_1, data = self.forgery_data_1.encode(encoding='utf-8'))
         except Exception as e:
             raise ConnectException(*e.args)
-
+        logging.info(f"{res.json()}")
         if res and res.status_code == 200:
             try:
                 res_json = res.json()
