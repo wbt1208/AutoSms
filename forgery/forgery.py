@@ -19,7 +19,7 @@ class Forgery():
         if not os.path.exists(self.html_path):
             os.makedirs(self.html_path)
 
-        self.forgery_api_1 = "http://182.122.138.24:8088/api"
+        self.forgery_api_1 = "http://192.168.1.4:8088/api"
         self.forgery_data_1 = {
             "title":"",
             "body":""
