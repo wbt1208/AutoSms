@@ -44,12 +44,15 @@ def main():
     if confutil.get_publisher_status():
         pass
     if pgetter:
+        logging.info("采集器启动》》》》》》》》》")
         pgetter.start()
         pgetter.join()
     if forgeryhtml:
+        logging.info("伪原创启动》》》》》》》》》")
         forgeryhtml.start()
         forgeryhtml.join()
     if ph2w:
+        logging.info("html转word启动》》》》》》》")
         ph2w.start()
         ph2w.join()
 

@@ -2,6 +2,11 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 .idea/
+.html/
+.wold/
+.word/
+.forgery_html/
+.forgery_word/
 *.py[cod]
 *$py.class
 
