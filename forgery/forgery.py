@@ -36,10 +36,14 @@ class Forgery():
                     logging.info(f"> > >{source_file}> > >伪原创中")
                     with open(source_file, "r", encoding="utf-8") as fp:
                         html = fp.read()
-                    html_tree = etree.HTML(html)
-                    self.bianli(html_tree)
+
+                    # html_tree = etree.HTML(html)
+                    # self.bianli(html_tree)
+                    # with open(dst_file, "w", encoding="utf-8") as fp:
+                    #     fp.write(etree.tostring(html_tree, encoding="utf-8").decode())
+                    title, forgrey_html = self.forgery_1(source_file.replace(".html", ""), html)
                     with open(dst_file, "w", encoding="utf-8") as fp:
-                        fp.write(etree.tostring(html_tree, encoding="utf-8").decode())
+                        fp.write(forgrey_html)
                     logging.info(f"> > > {source_file} > > >伪原创成功")
 
     def bianli(self, html_tree):
@@ -53,12 +57,13 @@ class Forgery():
     def callback(self, text):
         if not text:
             return text
-        forgery_text = self.forgery_1(text)
+        forgery_text = self.forgery_1("1", text)
         forgery_text = self.forgery_2(forgery_text)
 
         return forgery_text
 
-    def forgery_1(self, text):
+    def forgery_1(self, title, text):
+        self.forgery_data_1["title"] = title
         self.forgery_data_1["body"] = text
         try:
             res = requests.post(self.forgery_api_1, data = self.forgery_data_1)
@@ -68,11 +73,12 @@ class Forgery():
         if res and res.status_code == 200:
             try:
                 res_json = res.json()
+                forgery_title = res_json["body"]
                 forgery_text = res_json["body"]
             except Exception as e:
                 raise ReturnCodeException(*e.args)
             else:
-                return forgery_text
+                return forgery_title, forgery_text
         else:
             raise ReturnCodeException(res if not res else res.status_code)
 
