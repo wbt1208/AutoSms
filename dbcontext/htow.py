@@ -7,6 +7,7 @@ class HtmlToWord():
     def __init__(self):
         self.html_path = confutil.get_html_path()
         self.word_path = confutil.get_word_path()
+        self.forgery_html_path = confutil.get_forgery_html()
         self.forgery_path = confutil.get_forgery_word()
         if not os.path.exists(self.html_path):
             os.makedirs(self.html_path)
@@ -22,6 +23,7 @@ class HtmlToWord():
             for filename in os.listdir(self.html_path):
                 source_file = os.path.join(self.html_path, filename)
                 dst_file = os.path.join(self.word_path, filename.replace(".html", ".docx"))
+                source_forgery_file = os.path.join(self.forgery_html_path, filename)
                 dst_forgery_file = os.path.join(self.forgery_path, filename.replace(".html", ".docx"))
                 if not os.path.exists(dst_file):
                     try:
@@ -29,13 +31,15 @@ class HtmlToWord():
                         pypandoc.convert_file(source_file, 'docx', outputfile = dst_file)
                     except Exception as e:
                         logging.error(f"html2word ===============   {e.args}")
+                    finally:
+                        time.sleep(5)
                 if not os.path.exists(dst_forgery_file):
                     try:
                         logging.info(f"convert {source_file} to {dst_forgery_file}")
-                        pypandoc.convert_file(source_file, 'docx', outputfile = dst_forgery_file)
+                        pypandoc.convert_file(source_forgery_file, 'docx', outputfile = dst_forgery_file)
                     except Exception as e:
                         logging.error(f"html2word ===============   {e.args}")
-
-            time.sleep(20)
+                    finally:
+                        time.sleep(5)
 
 

@@ -89,6 +89,10 @@ class ConfUtil(ConfUtilFornatter):
 
     def get_forgery_ratio(self):
         return self.conf["forgery_ratio"]
+    def get_app_id(self):
+        return self.conf["app_id"]
+    def get_app_token(self):
+        return self.conf["app_token"]
 
     # import win32file
     # def is_used(filename):
