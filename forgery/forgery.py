@@ -21,10 +21,7 @@ class Forgery():
             os.makedirs(self.html_path)
 
         self.forgery_api_1 = "http://192.168.1.4:8088/api"
-        self.forgery_data_1 = {
-            "title":"",
-            "body":""
-        }
+        self.forgery_data_1 = 'title=&body={}'
         self.forgery_api_2 = "http://seowyc.com/seo/api/wyc.html"
 
     def run(self):
@@ -56,17 +53,17 @@ class Forgery():
 
     def callback(self, text):
         if not text:
+            logging.info(f"{text}")
             return text
-        forgery_text = self.forgery_1("1", text)
+        forgery_text = self.forgery_1(text)
         forgery_text = self.forgery_2(forgery_text)
 
         return forgery_text
 
-    def forgery_1(self, title, text):
-        self.forgery_data_1["title"] = title
-        self.forgery_data_1["body"] = text
+    def forgery_1(self, text):
+        self.forgery_data_1.format(text)
         try:
-            res = requests.post(self.forgery_api_1, data = self.forgery_data_1)
+            res = requests.post(self.forgery_api_1, data = self.forgery_data_1.encode(encoding='utf-8'))
         except Exception as e:
             raise ConnectException(*e.args)
 
@@ -74,7 +71,7 @@ class Forgery():
             try:
                 res_json = res.json()
                 forgery_title = res_json["body"]
-                forgery_text = res_json["body"]
+                forgery_text = res_json["title"]
             except Exception as e:
                 raise ReturnCodeException(*e.args)
             else:
