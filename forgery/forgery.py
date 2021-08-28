@@ -50,18 +50,18 @@ class Forgery():
 
     def callback(self, text):
         if not text:
-            logging.info(f"{text}")
             return ""
+        logging.info(f"{text}")
         forgery_text = self.forgery_1(text)
         forgery_text = self.forgery_2(forgery_text)
 
         return forgery_text
 
     def forgery_1(self, text):
-        self.forgery_data_1 = self.forgery_data_1.format(text)
         try:
             logging.info(self.forgery_data_1)
-            res = requests.post(self.forgery_api_1, data = self.forgery_data_1.encode(encoding='utf-8'))
+            res = requests.post(self.forgery_api_1, data = self.forgery_data_1.format(text).\
+                                encode(encoding='utf-8'))
         except Exception as e:
             raise ConnectException(*e.args)
         logging.info(f"{res.json()}")
