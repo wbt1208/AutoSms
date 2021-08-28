@@ -67,12 +67,11 @@ class Forgery():
         if res and res.status_code == 200:
             try:
                 res_json = res.json()
-                forgery_title = res_json["body"]
-                forgery_text = res_json["title"]
+                forgery_text = res_json["body"]
             except Exception as e:
                 raise ReturnCodeException(*e.args)
             else:
-                return forgery_title, forgery_text
+                return forgery_text
         else:
             raise ReturnCodeException(res if not res else res.status_code)
 
