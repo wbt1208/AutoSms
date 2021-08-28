@@ -58,7 +58,7 @@ class Forgery():
         return forgery_text
 
     def forgery_1(self, text):
-        self.forgery_data_1.format(text)
+        self.forgery_data_1 = self.forgery_data_1.format(text)
         try:
             logging.info(self.forgery_data_1)
             res = requests.post(self.forgery_api_1, data = self.forgery_data_1.encode(encoding='utf-8'))
@@ -69,6 +69,8 @@ class Forgery():
             try:
                 res_json = res.json()
                 forgery_text = res_json["body"]
+                if forgery_text:
+                    forgery_text = forgery_text.replace("<p>", "").replace("</p>", "").replace(" ", "")
             except Exception as e:
                 raise ReturnCodeException(*e.args)
             else:
