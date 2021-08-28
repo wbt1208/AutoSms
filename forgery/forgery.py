@@ -51,7 +51,7 @@ class Forgery():
     def callback(self, text):
         if not text:
             logging.info(f"{text}")
-            return text
+            return ""
         forgery_text = self.forgery_1(text)
         forgery_text = self.forgery_2(forgery_text)
 
