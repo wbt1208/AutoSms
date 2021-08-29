@@ -35,7 +35,8 @@ class Forgery():
                     logging.info(f"> > >{source_file}> > >伪原创中")
                     with open(source_file, "r", encoding="utf-8") as fp:
                         html = fp.read()
-
+                    if "http://img.yizhuan5.com" not in html:
+                        html = html.replace("//img.yizhuan5.com","http://img.yizhuan5.com")
                     html_tree = etree.HTML(html)
                     self.bianli(html_tree)
                     with open(dst_file, "w", encoding="utf-8") as fp:
@@ -89,16 +90,20 @@ class Forgery():
             chrome.execute_script('window.stop()')
             chrome.refresh()
             time.sleep(1)
+            scrits = "var insertDiv = document.getElementById('editor');insertDiv.innerHTML = '{}'"
+            chrome.execute_script(scrits.format(''))
             element = chrome.find_element_by_id("editor")
-            for i in range(50):
-                element.send_keys("\b\b")
-                chrome.implicitly_wait(10)
-            for t in text:
-                element.send_keys(t)
-                chrome.implicitly_wait(10)
+            # for i in range(50):
+                # element.send_keys("\b\b")
+
+                # chrome.implicitly_wait(10)
+            # for t in text:
+            #     element.send_keys(t)
+            #     chrome.implicitly_wait(10)
             chrome.implicitly_wait(10)
+            chrome.execute_script(scrits.format(text))
             select = Select(chrome.find_element_by_id("ratio"))
-            select.select_by_index(3)
+            select.select_by_index(4)
             time.sleep(1)
             chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
             time.sleep(3)
