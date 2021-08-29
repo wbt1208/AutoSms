@@ -46,14 +46,20 @@ def main():
     if pgetter:
         logging.info("采集器启动》》》》》》》》》")
         pgetter.start()
-        pgetter.join()
+
     if forgeryhtml:
         logging.info("伪原创启动》》》》》》》》》")
         forgeryhtml.start()
-        forgeryhtml.join()
+
     if ph2w:
         logging.info("html转word启动》》》》》》》")
         ph2w.start()
+
+    if pgetter:
+        pgetter.join()
+    if forgeryhtml:
+        forgeryhtml.join()
+    if ph2w:
         ph2w.join()
 
 

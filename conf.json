@@ -17,7 +17,7 @@
     "forgery_html_path": "forgery_html",
     "forgery_word_path": "forgery_word",
     "forgery_ratio":"0.2",
-    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; CNZZDATA1278145158=2113046919-1629553933-null%7C1630132915; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666,1630138191; Token=f2227920-18bc-4e88-b5fa-6cafb6d009dc; ct=f2227920-18bc-4e88-b5fa-6cafb6d009dc_1630138681775; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630138683; ckt=1630138699",
+    "cookies": "",
     "app_id": "",
     "app_token": "",
     "mysqldb": {
