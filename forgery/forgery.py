@@ -22,7 +22,7 @@ class Forgery():
         if not os.path.exists(self.html_path):
             os.makedirs(self.html_path)
 
-        self.forgery_api_1 = "http://192.168.1.4:8088/api"
+        self.forgery_api_1 = "http://192.168.1.5:8088/api"
         self.forgery_data_1 = 'title=&body={}'
         self.forgery_api_2 = "http://seowyc.com/seo/api/wyc.html"
 
@@ -105,11 +105,11 @@ class Forgery():
             chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
             time.sleep(3)
             chrome.implicitly_wait(10)
-            print(element.text)
+            # print(element.text)
             # time.sleep(10)
 
         except Exception as e:
-            logging.info(f"》》》seo伪原创失败 》》》{e.args}")
+            logging.info(f"》》》》》seo伪原创失败 》》》{e.args}")
             return text
         else:
             return element.text
