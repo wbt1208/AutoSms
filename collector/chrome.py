@@ -92,34 +92,4 @@ class ChromeFectory:
     def get_action_chains(self):
         if hasattr(self, "browser"):
             return ActionChains(self.browser)
-chrome = ChromeFectory().get_chrome()
-
-chrome.set_page_load_timeout(5)
-try:
-    chrome.get("http://seowyc.com/")
-    time.sleep(1)
-    chrome.execute_script('window.stop()')
-    chrome.refresh()
-    time.sleep(1)
-    element = chrome.find_element_by_id("editor")
-    element.send_keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-                      "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-                      "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-                      "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
-    time.sleep(3)
-    element.send_keys("我爱大中国")
-    time.sleep(2)
-    select = Select(chrome.find_element_by_id("ratio"))
-    select.select_by_index(3)
-    time.sleep(1)
-    chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
-    chrome.implicitly_wait(10)
-    print(element.text)
-    # time.sleep(10)
-
-except Exception as e:
-    print(e.args)
-
-time.sleep(20)
-chrome.close()
 

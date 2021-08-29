@@ -4,7 +4,9 @@ import os
 import logging
 import requests
 from dbcontext.exception import *
-
+import time
+from collector.chrome import ChromeFectory
+from selenium.webdriver.support.ui import Select
 
 
 class Forgery():
@@ -79,7 +81,38 @@ class Forgery():
             raise ReturnCodeException(res if not res else res.status_code)
 
     def forgery_2(self, text):
-        return text
+        chrome = ChromeFectory().get_chrome()
+        chrome.set_page_load_timeout(5)
+        try:
+            chrome.get("http://seowyc.com/")
+            time.sleep(1)
+            chrome.execute_script('window.stop()')
+            chrome.refresh()
+            time.sleep(1)
+            element = chrome.find_element_by_id("editor")
+            element.send_keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                              "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                              "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                              "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
+            time.sleep(3)
+            element.send_keys(text)
+            time.sleep(2)
+            select = Select(chrome.find_element_by_id("ratio"))
+            select.select_by_index(3)
+            time.sleep(1)
+            chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
+            time.sleep(3)
+            chrome.implicitly_wait(10)
+            print(element.text)
+            # time.sleep(10)
+
+        except Exception as e:
+            logging.info(f"》》》seo伪原创失败 》》》{e.args}")
+            return text
+        else:
+            return element.text
+        finally:
+            chrome.close()
 
 
 
