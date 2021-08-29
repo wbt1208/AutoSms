@@ -89,7 +89,6 @@ class Forgery():
             time.sleep(1)
             scrits = "var insertDiv = document.getElementById('editor');insertDiv.innerHTML = '{}'"
             chrome.execute_script(scrits.format(''))
-            element = chrome.find_element_by_id("editor")
             # for i in range(50):
                 # element.send_keys("\b\b")
 
@@ -112,8 +111,10 @@ class Forgery():
             logging.info(f"》》》》》seo伪原创失败 》》》{e.args}")
             return text
         else:
+            element = chrome.find_element_by_id("editor")
             return element.get_attribute("outerHTML")
         finally:
+            logging.info(f"》》》》》seo伪原创成功 》》》")
             chrome.close()
 
 
