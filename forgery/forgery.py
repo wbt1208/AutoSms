@@ -90,13 +90,13 @@ class Forgery():
             chrome.refresh()
             time.sleep(1)
             element = chrome.find_element_by_id("editor")
-            element.send_keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-                              "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-                              "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-                              "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
-            time.sleep(3)
-            element.send_keys(text)
-            time.sleep(2)
+            for i in range(50):
+                element.send_keys("\b\b")
+                chrome.implicitly_wait(10)
+            for t in text:
+                element.send_keys(t)
+                chrome.implicitly_wait(10)
+            chrome.implicitly_wait(10)
             select = Select(chrome.find_element_by_id("ratio"))
             select.select_by_index(3)
             time.sleep(1)
