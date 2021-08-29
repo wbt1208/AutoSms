@@ -20,6 +20,10 @@ class ConfUtil(ConfUtilFornatter):
     def set_default_conf():
         default_conf = {
             "autosms_mode": 1,
+            "collector_status": "disable",
+            "html2word_status": "disable",
+            "forgery_status": "enable",
+            "publisher_status": "disable",
             "paramters": {
                 "source": "百家号",
                 "field": "历史",
@@ -28,12 +32,14 @@ class ConfUtil(ConfUtilFornatter):
                 "keyword": "二战"
             },
             "interval": "20",
-            "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Token=2d34d0a9-03ef-4d58-bfeb-4751571ce368; scene_id=69791513; ct=2d34d0a9-03ef-4d58-bfeb-4751571ce368_1630071081449; CNZZDATA1278145158=2113046919-1629553933-null%7C1630067977; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630071083; ckt=1630071951",
             "html_path": "html",
-            "word_path": "wold",
+            "word_path": "word",
             "forgery_html_path": "forgery_html",
             "forgery_word_path": "forgery_word",
-            "forgery_ratio": "20",
+            "forgery_ratio": "0.2",
+            "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; CNZZDATA1278145158=2113046919-1629553933-null%7C1630132915; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666,1630138191; Token=f2227920-18bc-4e88-b5fa-6cafb6d009dc; ct=f2227920-18bc-4e88-b5fa-6cafb6d009dc_1630138681775; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630138683; ckt=1630138699",
+            "app_id": "",
+            "app_token": "",
             "mysqldb": {
                 "host": "",
                 "port": "",
@@ -89,16 +95,22 @@ class ConfUtil(ConfUtilFornatter):
 
     def get_forgery_ratio(self):
         return self.conf["forgery_ratio"]
+
     def get_app_id(self):
         return self.conf["app_id"]
+
     def get_app_token(self):
         return self.conf["app_token"]
+
     def get_collector_status(self):
         return "enable" in self.conf["collector_status"]
+
     def get_html2word_status(self):
         return "enable" in self.conf["html2word_status"]
+
     def get_forgery_status(self):
         return "enable" in self.conf["forgery_status"]
+
     def get_publisher_status(self):
         return "enable" in self.conf["publisher_status"]
 

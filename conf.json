@@ -1,7 +1,7 @@
 {
     "autosms_mode": 1,
-    "collector_status": "disable",
-    "html2word_status": "disable",
+    "collector_status": "enable",
+    "html2word_status": "enable",
     "forgery_status": "enable",
     "publisher_status": "disable",
     "paramters": {

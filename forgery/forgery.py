@@ -80,6 +80,7 @@ class Forgery():
 
     def forgery_2(self, text):
         chrome = ChromeFectory().get_chrome()
+        chrome.minimize_window()
         chrome.set_page_load_timeout(5)
         try:
             chrome.get("http://seowyc.com/")
