@@ -103,7 +103,7 @@ class Forgery():
             select.select_by_index(4)
             time.sleep(1)
             chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
-            time.sleep(3)
+            time.sleep(10)
             chrome.implicitly_wait(10)
             # print(element.text)
             # time.sleep(10)
@@ -112,7 +112,7 @@ class Forgery():
             logging.info(f"》》》》》seo伪原创失败 》》》{e.args}")
             return text
         else:
-            return element.text
+            return element.get_attribute("outerHTML")
         finally:
             chrome.close()
 
