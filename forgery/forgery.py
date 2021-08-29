@@ -39,7 +39,7 @@ class Forgery():
                     html_tree = etree.HTML(html)
                     self.bianli(html_tree)
                     with open(dst_file, "w", encoding="utf-8") as fp:
-                        fp.write(etree.tostring(html_tree, encoding="utf-8").decode())
+                        fp.write(self.forgery_2(etree.tostring(html_tree, encoding="utf-8").decode()))
                     logging.info(f"> > > {source_file} > > >伪原创成功")
 
     def bianli(self, html_tree):
@@ -55,7 +55,7 @@ class Forgery():
             return ""
         logging.info(f"{text}")
         forgery_text = self.forgery_1(text)
-        forgery_text = self.forgery_2(forgery_text)
+        # forgery_text = self.forgery_2(forgery_text)
 
         return forgery_text
 
