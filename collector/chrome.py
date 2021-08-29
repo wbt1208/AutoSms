@@ -5,16 +5,19 @@ from webdriver_manager.chrome import ChromeDriverManager
 import sys
 import logging
 import platform
+import time
+from selenium.webdriver.support.ui import Select
 
 
 class ChromeFectory:
-    def __init__(self, conf):
-        self.path = conf["chrome_path"]
-        self.driver_path = conf["chrome_driver_path"]
-        self.auto_conf = conf["auto_conf_chrome"]
-        self.takeover = conf["takeover"]
-        self.simulate_mobile_phone = conf["simulate_mobile_phone"]
+    def __init__(self):
+        self.path = "/Users/kk/Downloads/chrome-mac/Chromium.app/Contents/MacOS/Chromium"
+        self.driver_path = "/Users/kk/PycharmProjects/ExPython/r_request/chromedriver"
+        self.auto_conf = True
+        self.takeover = False
+        self.simulate_mobile_phone = False
         self.options = webdriver.ChromeOptions()
+        args = []
         if self.simulate_mobile_phone:
             mobile_emulation = {
                 "deviceName": "iPhone X"
@@ -26,7 +29,7 @@ class ChromeFectory:
             del self.options
             self.options = webdriver.ChromeOptions()
             self.options.add_experimental_option('debugerAddress', "127.0.0.1:54786")
-        for arg in conf['chrome_options']:
+        for arg in args:
             self.options.add_argument(arg)
         self.conf_chrome()
 
@@ -89,3 +92,34 @@ class ChromeFectory:
     def get_action_chains(self):
         if hasattr(self, "browser"):
             return ActionChains(self.browser)
+chrome = ChromeFectory().get_chrome()
+
+chrome.set_page_load_timeout(5)
+try:
+    chrome.get("http://seowyc.com/")
+    time.sleep(1)
+    chrome.execute_script('window.stop()')
+    chrome.refresh()
+    time.sleep(1)
+    element = chrome.find_element_by_id("editor")
+    element.send_keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                      "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                      "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                      "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
+    time.sleep(3)
+    element.send_keys("我爱大中国")
+    time.sleep(2)
+    select = Select(chrome.find_element_by_id("ratio"))
+    select.select_by_index(3)
+    time.sleep(1)
+    chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
+    chrome.implicitly_wait(10)
+    print(element.text)
+    # time.sleep(10)
+
+except Exception as e:
+    print(e.args)
+
+time.sleep(20)
+chrome.close()
+
