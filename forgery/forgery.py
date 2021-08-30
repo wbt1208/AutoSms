@@ -97,8 +97,9 @@ class Forgery():
                 chrome.execute_script('window.stop()')
                 chrome.refresh()
             time.sleep(1)
+            text.replace('\'',"").replace('\n', "")
             scrits = "var insertDiv = document.getElementById('editor');insertDiv.innerHTML = '{}'"
-            chrome.execute_script(scrits.format(''))
+            # chrome.execute_script(scrits.format(''))
             # for i in range(50):
                 # element.send_keys("\b\b")
 
