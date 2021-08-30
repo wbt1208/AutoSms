@@ -109,10 +109,15 @@ class Forgery():
             #     chrome.implicitly_wait(10)
             chrome.implicitly_wait(10)
             chrome.execute_script(scrits.format(text))
-            select = Select(chrome.find_element_by_id("ratio"))
-            logging.warning(confutil.get_forgery_ratio())
-            select.select_by_index(confutil.get_forgery_ratio())
-            time.sleep(1)
+            time.sleep(2)
+            try:
+                chrome.execute_script("var r = document.getElementById('ratio');r.selectedIndex={};".format(confutil.get_forgery_ratio()))
+                time.sleep(2)
+            except:
+                select = Select(chrome.find_element_by_id("ratio"))
+                logging.warning(confutil.get_forgery_ratio())
+                select.select_by_index(confutil.get_forgery_ratio())
+                time.sleep(1)
             chrome.find_element_by_xpath("//input[@value='生成伪原创']").click()
             time.sleep(10)
             chrome.implicitly_wait(10)
@@ -135,6 +140,7 @@ class Forgery():
                 logging.info(f"》》》》》seo伪原创失败  重试》》》{e.args}")
                 return self.forgery_2(text)
             else:
+                chrome.close()
                 return element.get_attribute("outerHTML")
 
     def forgery_3(self, text):

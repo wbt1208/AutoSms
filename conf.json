@@ -1,23 +1,23 @@
 {
     "autosms_mode": 1,
-    "collector_status": "disable",
+    "collector_status": "enable",
     "html2word_status": "disable",
     "forgery_status": "enable",
     "publisher_status": "disable",
     "paramters": {
         "source": "百家号",
         "field": "历史",
-        "start_date": "2020-06-16",
-        "end_date": "2021-06-16",
-        "keyword": "二战"
+        "start_date": "2016-06-16",
+        "end_date": "2021-05-16",
+        "keyword": "清朝"
            },
-    "interval": "20",
+    "interval": "30",
     "html_path": "html",
     "word_path": "word",
     "forgery_html_path": "forgery_html",
     "forgery_word_path": "forgery_word",
     "forgery_ratio":"0.6",
-    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666,1630138191; CNZZDATA1278145158=2113046919-1629553933-null%7C1630327531; Token=900ba34a-ebf8-42c4-92a2-eace3338fc7e; ct=900ba34a-ebf8-42c4-92a2-eace3338fc7e_1630332333260; ckt=1630332334; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630332334",
+    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666,1630138191; CNZZDATA1278145158=2113046919-1629553933-null%7C1630338331; Token=ce187844-8704-4624-b908-d2cbf223b72c; ct=ce187844-8704-4624-b908-d2cbf223b72c_1630342895948; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630342897; ckt=1630342925",
     "app_id": "",
     "app_token": "",
     "mysqldb": {
