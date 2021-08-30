@@ -18,6 +18,7 @@ class HtmlToWord():
         if not os.path.exists(self.forgery_path):
             os.makedirs(self.forgery_path)
 
+
     def run(self):
         while True:
             for filename in os.listdir(self.html_path):

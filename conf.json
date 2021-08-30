@@ -1,7 +1,7 @@
 {
     "autosms_mode": 1,
-    "collector_status": "enable",
-    "html2word_status": "enable",
+    "collector_status": "disable",
+    "html2word_status": "disable",
     "forgery_status": "enable",
     "publisher_status": "disable",
     "paramters": {
@@ -16,8 +16,8 @@
     "word_path": "word",
     "forgery_html_path": "forgery_html",
     "forgery_word_path": "forgery_word",
-    "forgery_ratio":"0.2",
-    "cookies": "",
+    "forgery_ratio":"0.6",
+    "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666,1630138191; CNZZDATA1278145158=2113046919-1629553933-null%7C1630327531; Token=900ba34a-ebf8-42c4-92a2-eace3338fc7e; ct=900ba34a-ebf8-42c4-92a2-eace3338fc7e_1630332333260; ckt=1630332334; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630332334",
     "app_id": "",
     "app_token": "",
     "mysqldb": {

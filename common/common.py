@@ -15,6 +15,18 @@ class ConfUtilFornatter(object):
 class ConfUtil(ConfUtilFornatter):
     def __init__(self):
         self.get_conf()
+        self.temp ={
+            "1.0": 0,
+            "0.9": 1,
+            "0.8": 2,
+            "0.7": 3,
+            "0.6": 4,
+            "0.5": 5,
+            "0.4": 6,
+            "0.3": 7,
+            "0.2": 8,
+            "0.1": 9
+               }
 
     @staticmethod
     def set_default_conf():
@@ -94,7 +106,8 @@ class ConfUtil(ConfUtilFornatter):
         return self.conf["forgery_word_path"]
 
     def get_forgery_ratio(self):
-        return self.conf["forgery_ratio"]
+
+        return self.temp[self.conf["forgery_ratio"]]
 
     def get_app_id(self):
         return self.conf["app_id"]
