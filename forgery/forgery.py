@@ -137,11 +137,15 @@ class Forgery():
                 time.sleep(5)
                 chrome.close()
                 time.sleep(2)
-                logging.info(f"》》》》》seo伪原创失败  重试》》》{e.args}")
+                logging.info(f"》》》》》seo伪原创失败  重试》》》")
                 return self.forgery_2(text)
             else:
-                chrome.close()
-                return element.get_attribute("outerHTML")
+                try:
+                    q = element.get_attribute("outerHTML")
+                    chrome.close()
+                    return q
+                except:
+                    logging.warning(f"seo异常只过了超人！！！！！！")
 
     def forgery_3(self, text):
         headers = CaseInsensitiveDict()
