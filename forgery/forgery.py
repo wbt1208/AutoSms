@@ -112,8 +112,12 @@ class Forgery():
             logging.info(f"》》》》》seo伪原创失败 》》》{e.args}")
             return text
         else:
-            element = chrome.find_element_by_id("editor")
-            return element.get_attribute("outerHTML")
+            try:
+                element = chrome.find_element_by_id("editor")
+            except:
+                return text
+            else:
+                return element.get_attribute("outerHTML")
         finally:
             logging.info(f"》》》》》seo伪原创成功 》》》")
             chrome.close()
