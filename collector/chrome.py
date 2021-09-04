@@ -8,7 +8,6 @@ import platform
 import time
 from selenium.webdriver.support.ui import Select
 
-
 class ChromeFectory:
     def __init__(self):
         self.path = "/Users/kk/Downloads/chrome-mac/Chromium.app/Contents/MacOS/Chromium"

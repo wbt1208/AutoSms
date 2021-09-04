@@ -3,7 +3,7 @@ from collector.settings import *
 import logging
 url_detail = "https://www.yizhuan5.com/tools/gallery/article"
 url_newlist = "http://www.yizhuan5.com/Mediabrary/data/HotMContent"
-from common.common import confutil
+from common.common import confutil, commonutil
 from dbcontext import HtmlSver
 from collector.exceptions import *
 import time
@@ -109,9 +109,6 @@ class ArticleCrawler:
                     for article in article_json_lists:
                         hmcttitle = article["hmcttitle"]
                         logging.info(f"采集 》》》》{hmcttitle}》》》》》中")
-                        tags = article["tags"]
-                        hmctdate = article["hmctdate"]
-                        hmctsource = article["hmctsource"]
                         hmcturl = article["hmcturl"]
                         self.construct_detail_body(hmcturl)
                         try:
@@ -129,7 +126,7 @@ class ArticleCrawler:
                                     logging.info(f"{detail_json} {e.args}")
                                     raise ReturnCodeException(*e.args)
                                 # print(hmcttitle, hmctsource, hmctdate, tags, hmctdeatil)
-                                file_name = f"{hmcttitle}_{hmctsource}_{hmctdate}.html"
+                                file_name = f"{hmcttitle}.html"
                                 self.saver.save(file_name, hmcttitle,hmctdeatil)
                         finally:
                             time.sleep(int(confutil.get_interval()))

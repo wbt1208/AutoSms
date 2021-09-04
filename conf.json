@@ -19,7 +19,7 @@
     "forgery_ratio":"0.6",
     "cookies": "UM_distinctid=17b694205d8261-0b9e0ad739305c-35617403-13c680-17b694205d934f; Identification=13353936525; PwdToken=44a072122c0c4650d9c39e7b8ca20660; mySpread=36HWDDZJ; WxScanOpenId=b2lDZTEwbldfWGtuaHZUM1pZOS14c212N0RqOA; Hm_lvt_119d728e13405b1761bac1057994ec52=1629558541,1629826666,1630138191; CNZZDATA1278145158=2113046919-1629553933-null%7C1630338331; Token=ce187844-8704-4624-b908-d2cbf223b72c; ct=ce187844-8704-4624-b908-d2cbf223b72c_1630342895948; Hm_lpvt_119d728e13405b1761bac1057994ec52=1630342897; ckt=1630342925",
     "app_id": "",
-    "app_token": "",
+    "app_token": "16cc4bfed36b73fc7f055a0fb1e96be",
     "mysqldb": {
         "host": "",
         "port": "",

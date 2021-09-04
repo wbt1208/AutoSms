@@ -1,9 +1,24 @@
 import json
-import logging
 import os
+import signal
+import logging
+import time
+def time_out(interval):
+    def decorator(func):
+        def handler(signum, frame):
+            raise TimeoutError
+        def wrapper(*args, **kwargs):
+            signal.signal(signal.SIGALRM, handler)
+            signal.alarm(interval)
+            result = func(*args, **kwargs)
+            signal.alarm(0)
+            return result
+        return wrapper
+    return decorator
 
 
-class ConfUtilFornatter(object):
+
+class UtilFornatter(object):
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, '_singleton'):
             cls._singleton = object.__new__(cls)
@@ -12,7 +27,7 @@ class ConfUtilFornatter(object):
             return cls._singleton
 
 
-class ConfUtil(ConfUtilFornatter):
+class ConfUtil(UtilFornatter):
     def __init__(self):
         self.get_conf()
         self.temp ={
@@ -127,19 +142,28 @@ class ConfUtil(ConfUtilFornatter):
     def get_publisher_status(self):
         return "enable" in self.conf["publisher_status"]
 
-    # import win32file
-    # def is_used(filename):
-    #     try:
-    #         vHandel = win32file.CreateFile(filename, win32file.GENERIC_READ, 0, None, win32file.OPEN_EXISTING,
-    #                                        win32file.FILE_ATTRIBUTE_NORMAL, None)
-    #     except Exception as e:
-    #         if "正在使用" in e.args[-1]:
-    #         return True
-    #     else:
-    #         raise FileExistsError(*e.args)
-    #     else:
-    #         win32file.CloseHandle(vHandel)
-    #         return False
+class CommonUtil(UtilFornatter):
+
+    def __init__(self):
+        UtilFornatter.__init__(self)
+    @staticmethod
+    def retry(func):
+        def inner(*args, **kwargs):
+            count = 3
+            while count > 0:
+                try:
+                    result = func(*args, **kwargs)
+                except Exception as e:
+                    if count > 0:
+                        logging.info(f"正在重试,{e.args}")
+                        time.sleep(5)
+                        count -= 1
+                    else:
+                        raise e
+                else:
+                    return result
+        return inner
 
 
+commonutil = CommonUtil()
 confutil = ConfUtil()

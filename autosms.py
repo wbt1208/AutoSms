@@ -6,6 +6,7 @@ from dbcontext import HtmlToWord
 from multiprocessing import Process
 from forgery.forgery import Forgery
 from common.common import confutil
+from publisher.publisher import BaiPublisher
 
 def init_logging(filename, mode):
     logger = logging.getLogger('')
@@ -31,7 +32,7 @@ def init_logging(filename, mode):
 init_logging("autosms.log", "w")
 
 def main():
-    pgetter = forgeryhtml = ph2w = None
+    pgetter = forgeryhtml = ph2w = pbaipublisher =None
     if confutil.get_collector_status():
         getter = Getter()
         pgetter = Process(target=getter.run, args=())
@@ -42,7 +43,9 @@ def main():
         h2w = HtmlToWord()
         ph2w = Process(target=h2w.run, args=())
     if confutil.get_publisher_status():
-        pass
+        baipublisher = BaiPublisher()
+        pbaipublisher = Process(target=baipublisher.run, args=())
+
     if pgetter:
         logging.info("采集器启动》》》》》》》》》")
         pgetter.start()
@@ -54,6 +57,9 @@ def main():
     if ph2w:
         logging.info("html转word启动》》》》》》》")
         ph2w.start()
+    if pbaipublisher:
+        logging.info("发布器启动》》》》》》》》》")
+        pbaipublisher.start()
 
     if pgetter:
         pgetter.join()
@@ -61,16 +67,9 @@ def main():
         forgeryhtml.join()
     if ph2w:
         ph2w.join()
+    if pbaipublisher:
+        pbaipublisher.join()
 
-
-
-
-
-
-
-    pgetter.join()
-    ph2w.join()
-    forgeryhtml.join()
 
 
 
