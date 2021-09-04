@@ -1,8 +1,8 @@
 from requests import Session
 import logging
 from common.common import confutil
-from exception import *
-import json
+from .exception import *
+# import json
 import os
 import time
 exception_code = {
@@ -44,7 +44,7 @@ class BaiPublisher:
         self.session.headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
         }
-        self.app_id = int(confutil.get_app_id())
+        self.app_id = confutil.get_app_id()
         self.app_token = confutil.get_app_token()
         self.publish_picture_text_data = dict()
         self.query_status_data = dict()
@@ -53,7 +53,7 @@ class BaiPublisher:
         if not os.path.exists(self.publisher_html_path):
             os.makedirs(self.publisher_html_path)
         self.published_html_path = "temp_ped"
-        if not os.path.exists(self.publisher_html_path):
+        if not os.path.exists(self.published_html_path):
             os.makedirs(self.published_html_path)
     def run(self):
         while True:
@@ -72,7 +72,7 @@ class BaiPublisher:
                             title=filename,
                             content=content,
                             origin_url=f"http://baijiahao.baidu.com/s?id={hash(filename)}",
-                            cover_images =f"",
+                            cover_images = "",
                             is_original=1,
                             is_split_article='',
                             video_title='',

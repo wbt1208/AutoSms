@@ -3,10 +3,11 @@ import sys
 import os
 from collector import Getter
 from dbcontext import HtmlToWord
-from multiprocessing import Process
+from multiprocessing.dummy import Process
 from forgery.forgery import Forgery
 from common.common import confutil
 from publisher.publisher import BaiPublisher
+import traceback
 
 def init_logging(filename, mode):
     logger = logging.getLogger('')
@@ -77,5 +78,6 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as e:
+        traceback.print_tb(e.__traceback__)
         logging.error(f"run error {e.args}")
         os.system("pause")

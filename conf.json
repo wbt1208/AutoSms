@@ -3,7 +3,7 @@
     "collector_status": "enable",
     "html2word_status": "disable",
     "forgery_status": "enable",
-    "publisher_status": "disable",
+    "publisher_status": "enable",
     "paramters": {
         "source": "百家号",
         "field": "历史",

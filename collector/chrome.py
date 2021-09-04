@@ -5,8 +5,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 import sys
 import logging
 import platform
-import time
-from selenium.webdriver.support.ui import Select
 
 class ChromeFectory:
     def __init__(self):
