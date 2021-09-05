@@ -18,7 +18,7 @@ class HtmlSver():
             if body.__sizeof__() > 200:
                 with open(file_name, "w+", encoding="utf-8") as fp:
                     fp.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">")
-                    fp.write(f"<h1><strong>{title}</strong></h1>")
+                    # fp.write(f"<h1><strong>{title}</strong></h1>")
                     fp.write(body)
                     fp.flush()
                     logging.info(f"{file_name}=====下载成功")

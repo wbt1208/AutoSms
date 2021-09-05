@@ -49,7 +49,7 @@ class BaiPublisher:
         self.publish_picture_text_data = dict()
         self.query_status_data = dict()
         self.query_list_data = dict()
-        self.publisher_html_path = "temp"
+        self.publisher_html_path = "publish_html"
         if not os.path.exists(self.publisher_html_path):
             os.makedirs(self.publisher_html_path)
         self.published_html_path = "temp_ped"
@@ -69,7 +69,7 @@ class BaiPublisher:
                             logging.info(f"$$$$ {filename} 过小 $$$$ 忽略")
                             continue
                         self.publish_picture_text(
-                            title=filename,
+                            title=filename.replace(".html",""),
                             content=content,
                             origin_url=f"http://baijiahao.baidu.com/s?id={hash(filename)}",
                             cover_images = "",
